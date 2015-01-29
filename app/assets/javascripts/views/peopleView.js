@@ -24,12 +24,14 @@ App.PeopleView = Backbone.View.extend({
   },
 
   search: function() {
-    var searchText = this.$el.find("input").val() || "";
+    var searchText = this.$el.find("input").val();
 
     if (searchText === "") {
       this.renderCollection(this.collection.toJSON());
     } else {
-      this.renderCollection(this.collection.filterBySearch(searchText).toJSON());
+      this.renderCollection(
+        this.collection.filterBySearch(searchText).toJSON()
+      );
     }
   }
 
