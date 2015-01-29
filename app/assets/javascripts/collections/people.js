@@ -1,4 +1,6 @@
-var People = Backbone.Collection.extend({
+var App = App || {};
+
+App.People = Backbone.Collection.extend({
   url: "/people",
-  model: Person
+  model: App.Person
 });
