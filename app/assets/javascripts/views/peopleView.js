@@ -2,24 +2,35 @@ var App = App || {};
 
 App.PeopleView = Backbone.View.extend({
 
+  events: {
+    'keyup input': 'search'
+  },
+
   render: function() {
 
-    // PUT IT IN THE VIEW'S ELEMENT
-    this.$el.html(
+    this.$el.html(JST['app']());
 
-      // RENDER THE DATA
-      JST['people'](
+    this.renderCollection(this.collection.toJSON());
 
-        // GET THE DATA
-        // @people = Person.all
-        { people: this.collection.toJSON() }
-
-      )
-
-    );
-
-    // RETURN THE VIEW FOR CHAINING
     return this;
+  },
+
+  renderCollection: function(data) {
+    this.$el.find("ul").html(
+      JST['people'](
+        { people: data }
+      )
+    );
+  },
+
+  search: function() {
+    var searchText = this.$el.find("input").val() || "";
+
+    if (searchText === "") {
+      this.renderCollection(this.collection.toJSON());
+    } else {
+      this.renderCollection(this.collection.filterBySearch(searchText).toJSON());
+    }
   }
 
 });
