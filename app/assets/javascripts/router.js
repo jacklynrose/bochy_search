@@ -6,7 +6,11 @@ App.Router = Backbone.Router.extend({
   },
 
   homePage: function() {
-    $("body").append("It works!");
+    var peopleCollection = new App.People();
+    peopleCollection.fetch().then(function() {
+      var peopleView = new App.PeopleView({ collection: peopleCollection });
+      $("#container").html(peopleView.render().el);
+    });
   }
 });
 App.router = new App.Router();
